@@ -1,0 +1,8 @@
+# AI & OCR Project Dependencies
+# Install with: pip install -r requirements.txt
+
+requests
+pyttsx3
+opencv-python
+pyzbar
+Pillow

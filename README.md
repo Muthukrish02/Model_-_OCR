@@ -22,9 +22,118 @@ pip install requests pyttsx3 opencv-python pyzbar pillow
 ### Additional Requirements
 
 - **googleorc.py**: Valid Google Gemini API key
-- **test.py**: Local server running at `http://localhost:8080`
+- **test.py**: llama.cpp server running on port 8080
 
 ---
+
+## Install llama.cpp
+
+### Step 1: Download llama.cpp
+
+```powershell
+# Option 1: Download pre-built binary (Windows)
+# Visit: https://github.com/ggerganov/llama.cpp/releases
+# Download: llama-b8829-bin-win-cpu-x64.zip
+
+# Option 2: Clone and build from source
+git clone https://github.com/ggerganov/llama.cpp.git
+cd llama.cpp
+cmake -B build
+cmake --build build --config Release
+```
+
+### Step 2: Verify Installation
+
+```powershell
+# Check if llama-server is available
+./llama-server --version
+```
+
+---
+
+## Run the Server
+
+### Start VL Model Server
+
+```powershell
+# From llama-b8829-bin-win-cpu-x64 folder
+./llama-server ^
+  -hf LiquidAI/LFM2.5-VL-450M-GGUF:Q4_0 ^
+  -c 2048 ^
+  --port 8080
+```
+
+| Parameter | Description |
+|-----------|-------------|
+| `-hf` | HuggingFace model ID |
+| `-c 2048` | Context length (tokens) |
+| `--port 8080` | Server port |
+
+### Expected Output
+
+```
+llama server listening on 127.0.0.1:8080
+```
+
+---
+
+## Install Python Requirements
+
+### Option 1: Using requirements.txt (Recommended)
+
+```powershell
+pip install -r requirements.txt
+```
+
+### Option 2: Manual Install
+
+```powershell
+pip install requests pyttsx3 opencv-python pyzbar pillow
+```
+
+| Package | Purpose |
+|---------|---------|
+| `requests` | HTTP API calls |
+| `pyttsx3` | Text-to-speech |
+| `opencv-python` | Image processing |
+| `pyzbar` | Barcode detection |
+| `PIL` | Image loading |
+
+---
+
+## Running test.py
+
+### Prerequisites
+
+1. ✅ llama.cpp server running on port 8080
+2. ✅ Python dependencies installed
+3. ✅ Image file exists at specified path
+
+### Step 1: Start the Server (Terminal 1)
+
+```powershell
+# In llama-b8829-bin-win-cpu-x64 folder
+./llama-server ^
+  -hf LiquidAI/LFM2.5-VL-450M-GGUF:Q4_0 ^
+  -c 2048 ^
+  --port 8080
+```
+
+### Step 2: Run the Script (Terminal 2)
+
+```powershell
+# In AI_and_ocr folder
+python test.py
+```
+
+### Configuration
+
+Edit these variables in the script:
+
+```python
+img_path = r"D:\oraxiz\smartfram\test11.png"  # Line 17
+url = "http://localhost:8080/v1/chat/completions"  # Line 29
+```
 
 ## googleorc.py
 
